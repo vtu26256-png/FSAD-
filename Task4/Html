@@ -2,43 +2,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login</title>
+  <title>Student Registration</title>
 </head>
 <body>
 
-<h2>Login</h2>
+<h2>Student Registration</h2>
 
-<input type="text" id="username" placeholder="Username"><br><br>
-<input type="password" id="password" placeholder="Password"><br><br>
+<form id="form">
+  <input type="text" id="name" placeholder="Name" required><br><br>
+  <input type="email" id="email" placeholder="Email" required><br><br>
+  <input type="date" id="dob" required><br><br>
+  <input type="text" id="dept" placeholder="Department" required><br><br>
+  <input type="text" id="phone" placeholder="Phone" required><br><br>
 
-<button onclick="login()">Login</button>
-
-<p id="error" style="color:red;"></p>
+  <button type="submit">Register</button>
+</form>
 
 <script>
-function login() {
-  if (username.value === "" || password.value === "") {
-    error.innerText = "All fields are required!";
-    return;
-  }
+document.getElementById("form").addEventListener("submit", function(e) {
+  e.preventDefault();
 
-  fetch("http://localhost:3000/login", {
+  fetch("http://localhost:3000/register", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({
-      username: username.value,
-      password: password.value
+      name: name.value,
+      email: email.value,
+      dob: dob.value,
+      department: dept.value,
+      phone: phone.value
     })
   })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      window.location = "dashboard.html";
-    } else {
-      error.innerText = "Invalid Username or Password!";
-    }
-  });
-}
+  .then(res => res.text())
+  .then(data => alert(data));
+});
 </script>
 
 </body>
