@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+</head>
+<body>
+
+<h2>Login</h2>
+
+<input type="text" id="username" placeholder="Username"><br><br>
+<input type="password" id="password" placeholder="Password"><br><br>
+
+<button onclick="login()">Login</button>
+
+<p id="error" style="color:red;"></p>
+
+<script>
+function login() {
+  if (username.value === "" || password.value === "") {
+    error.innerText = "All fields are required!";
+    return;
+  }
+
+  fetch("http://localhost:3000/login", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      username: username.value,
+      password: password.value
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      window.location = "dashboard.html";
+    } else {
+      error.innerText = "Invalid Username or Password!";
+    }
+  });
+}
+</script>
+
+</body>
+</html>
