@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image Slider</title>
+</head>
+<body>
+
+<h2>Image Slider</h2>
+
+<img id="slider" src="https://picsum.photos/id/101/400/200" width="400">
+
+<br><br>
+<button onclick="prev()">Prev</button>
+<button onclick="next()">Next</button>
+
+<script>
+let images = [
+  "https://picsum.photos/id/101/400/200",
+  "https://picsum.photos/id/102/400/200",
+  "https://picsum.photos/id/103/400/200"
+];
+
+let i = 0;
+
+function show() {
+  document.getElementById("slider").src = images[i];
+}
+
+function next() {
+  i = (i + 1) % images.length;
+  show();
+}
+
+function prev() {
+  i = (i - 1 + images.length) % images.length;
+  show();
+}
+</script>
+
+</body>
+</html>
