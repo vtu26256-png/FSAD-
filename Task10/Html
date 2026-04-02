@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Local Storage</title>
+</head>
+<body>
+
+<h2>Save Notes</h2>
+
+<input type="text" id="note" placeholder="Enter note">
+<button onclick="saveNote()">Save</button>
+
+<h3>Saved Notes</h3>
+<ul id="notes"></ul>
+
+<script>
+function saveNote() {
+  let note = document.getElementById("note").value;
+
+  if (note === "") return;
+
+  let notes = JSON.parse(localStorage.getItem("notes")) || [];
+  notes.push(note);
+
+  localStorage.setItem("notes", JSON.stringify(notes));
+
+  displayNotes();
+  document.getElementById("note").value = "";
+}
+
+function displayNotes() {
+  let notes = JSON.parse(localStorage.getItem("notes")) || [];
+
+  let output = "";
+  notes.forEach(n => {
+    output += `<li>${n}</li>`;
+  });
+
+  document.getElementById("notes").innerHTML = output;
+}
+
+// load on page open
+displayNotes();
+</script>
+
+</body>
+</html>
