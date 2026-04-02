@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculator</title>
+</head>
+<body>
+
+<h2>Calculator</h2>
+
+<input type="number" id="a">
+<input type="number" id="b"><br><br>
+
+<button onclick="calc('+')">Add</button>
+<button onclick="calc('-')">Subtract</button>
+<button onclick="calc('*')">Multiply</button>
+<button onclick="calc('/')">Divide</button>
+
+<h3 id="result"></h3>
+
+<script>
+function calc(op) {
+  let a = Number(document.getElementById("a").value);
+  let b = Number(document.getElementById("b").value);
+  let res;
+
+  if (op === "+") res = a + b;
+  if (op === "-") res = a - b;
+  if (op === "*") res = a * b;
+  if (op === "/") res = a / b;
+
+  document.getElementById("result").innerText = "Result: " + res;
+}
+</script>
+
+</body>
+</html>
