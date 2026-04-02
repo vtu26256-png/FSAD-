@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Feedback Form</title>
+  <style>
+    input, textarea {
+      padding: 8px;
+      margin: 10px;
+      display: block;
+    }
+
+    .hover {
+      background-color: lightyellow;
+    }
+
+    .error {
+      border: 2px solid red;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Feedback Form</h2>
+
+<form id="form">
+  <input type="text" id="name" placeholder="Name">
+  <input type="email" id="email" placeholder="Email">
+  <textarea id="msg" placeholder="Feedback"></textarea>
+
+  <button type="button" ondblclick="submitForm()">Submit</button>
+</form>
+
+<p id="status"></p>
+
+<script>
+// reusable validation
+function validate(input) {
+  if (input.value.trim() === "") {
+    input.classList.add("error");
+    return false;
+  } else {
+    input.classList.remove("error");
+    return true;
+  }
+}
+
+// keypress validation
+document.querySelectorAll("input, textarea").forEach(el => {
+  el.addEventListener("keyup", () => validate(el));
+
+  // hover highlight
+  el.addEventListener("mouseover", () => el.classList.add("hover"));
+  el.addEventListener("mouseout", () => el.classList.remove("hover"));
+});
+
+function submitForm() {
+  let valid = true;
+
+  document.querySelectorAll("input, textarea").forEach(el => {
+    if (!validate(el)) valid = false;
+  });
+
+  if (valid) {
+    document.getElementById("status").innerText = "Submitted successfully!";
+  } else {
+    document.getElementById("status").innerText = "Please fill all fields!";
+  }
+}
+</script>
+
+</body>
+</html>
