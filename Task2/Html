@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+</head>
+<body>
+
+<h2>Student Dashboard</h2>
+
+<select id="sort">
+  <option value="">Sort</option>
+  <option value="name">Name</option>
+  <option value="dob">DOB</option>
+</select>
+
+<input type="text" id="dept" placeholder="Filter by Department">
+
+<button onclick="loadData()">Load Data</button>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Name</th><th>Email</th><th>DOB</th><th>Dept</th><th>Phone</th>
+    </tr>
+  </thead>
+  <tbody id="table"></tbody>
+</table>
+
+<h3>Students per Department</h3>
+<ul id="count"></ul>
+
+<script>
+async function loadData() {
+  const sort = document.getElementById("sort").value;
+  const dept = document.getElementById("dept").value;
+
+  const res = await fetch(`http://localhost:3000/students?sort=${sort}&dept=${dept}`);
+  const data = await res.json();
+
+  let rows = "";
+  data.forEach(s => {
+    rows += `<tr>
+      <td>${s.name}</td>
+      <td>${s.email}</td>
+      <td>${s.dob}</td>
+      <td>${s.department}</td>
+      <td>${s.phone}</td>
+    </tr>`;
+  });
+
+  document.getElementById("table").innerHTML = rows;
+
+  // COUNT
+  const res2 = await fetch("http://localhost:3000/count");
+  const countData = await res2.json();
+
+  let list = "";
+  countData.forEach(c => {
+    list += `<li>${c.department} : ${c.count}</li>`;
+  });
+
+  document.getElementById("count").innerHTML = list;
+}
+</script>
+
+</body>
+</html>
